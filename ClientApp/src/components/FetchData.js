@@ -10,7 +10,7 @@ export class FetchData extends Component {
     
     this.ReplaceOperator = this.ReplaceOperator.bind(this);
     this.CalcVal=this.CalcVal.bind(this);
-    //this.setVal=this.setVal.bind(this);
+    
   }
   update = (name, e) => {
     this.setState({ [name]: e.target.value });
@@ -20,19 +20,23 @@ export class FetchData extends Component {
     this.setState({ [name]: e.target.value },() => this.CalcVal());
     
   }
+  // onclic of the select icon set the fields operator and result by the record select its Performed on client
    setVal= (val,firstParam,secParam,operator,result) => {
     this.setState({ ['index']: val,['field1']: firstParam,['field2']: secParam,['currentCount']: operator,['result']: result});
     
   }
+  //load the hysotry from server side
   componentDidMount() {
     this.populateWeatherData();
   }
+  //change operator of calculatoin on client
   ReplaceOperator() {
     this.setState({
       currentCount: this.state.currentCount==3?0: this.state.currentCount + 1
     },() => this.CalcVal());
   
   }
+  //on change one of the input calc the result on server side and return the update list
   CalcVal(sec) {
     if(this.state.field1 && (this.state.field2 ||sec))
     {
@@ -59,6 +63,7 @@ export class FetchData extends Component {
      }).then(response => response.json())
      .then(data => this.setState({ forecasts:data, loading: data.length>0?false:true,index:-1 }));
   }
+  //on click of remove icon remove the record from cache on server side
   RmVal(val,firstParam,secParam,operator,result) {
     this.setState({ ['index']: val,['field1']: firstParam,['field2']: secParam,['currentCount']: operator,['result']: result},
     () => this.remove(val));
@@ -88,12 +93,14 @@ export class FetchData extends Component {
   }
 
   render() {
+    {/* the table of hystory */}
     let contents = this.state.loading
-      ? <p><em>אין היסטוריה</em></p>
+      ? <p><em>no hystory</em></p>
       : this.renderForecastsTable(this.state.forecasts);
 
     return (
       <form>
+        {/* the calculator fields */}
   <div class="div-flex">
   <input type="text" name="first" value={this.state.field1} onChange={(e) => this.updateAndCalc("field1", e)}/>
   
@@ -106,8 +113,7 @@ export class FetchData extends Component {
    
   
   <div>
-        {/* <h1 id="tabelLabel" >Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p> */}
+        {/* the hystory */}
         {contents}
       </div>
 </form>
@@ -125,7 +131,6 @@ export class FetchData extends Component {
       })
      }).then(response => response.json())
      .then(data => this.setState({ forecasts: data, loading: data.length>0?false:true }));
-    // const data = await response.json();
-    // this.setState({ forecasts: data, loading: false });
+  
   }
 }
