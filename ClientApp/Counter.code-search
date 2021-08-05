@@ -1,0 +1,13 @@
+# Query: Counter
+# ContextLines: 1
+
+2 results - 1 file
+
+ClientApp\README.md:
+  1260  
+  1261: When you encounter bugs caused by changing components, you will gain a deeper insight into which parts of them are worth testing in your application. This might be a good time to introduce more specific tests asserting specific expected output or behavior.
+  1262  
+
+  1428  
+  1429: When creating a build of your application with `npm run build` linter warnings are not checked by default. Like `npm test`, you can force the build to perform a linter warning check by setting the environment variable `CI`. If any warnings are encountered then the build fails.
+  1430  
