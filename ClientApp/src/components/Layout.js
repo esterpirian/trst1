@@ -7,6 +7,7 @@ export class Layout extends Component {
 
   render () {
     return (
+      //the first page load the home route-fetchData component
       <div>
       
         <div><h3>Exercise – Calculator </h3></div>
